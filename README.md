@@ -1,4 +1,6 @@
-# readme::author
+# integration-microsoftgraph://readme
+
+![VSTS Badge](https://revaturecloudio.visualstudio.com/_apis/public/build/definitions/2da46701-d7e3-415b-8014-9844d62eb557/7/badge)
 
 ## instruction
 1. download and install Virtualbox 5.2+.
@@ -18,4 +20,4 @@
 + fred belotte.
 
 ## license
-__author__ is licensed under the terms of the [MIT License](https://github.com/fredbelotte/author/blob/master/LICENSE).
+__integration-microsoftgraph__ is licensed under the terms of the [MIT License](https://github.com/revaturecloud/integration-microsoftgraph/blob/master/LICENSE).
