@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Integration.MicrosoftGraph.Service.Controllers
 {
-  [Route("api/[conroller]")]
+  [Route("api/[controller]")]
   public class MicrosoftGraphController : Controller
   {
     public async Task<IActionResult> Get()

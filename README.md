@@ -1,6 +1,7 @@
 # integration-microsoftgraph://readme
 
-![VSTS Badge](https://revaturecloudio.visualstudio.com/_apis/public/build/definitions/2da46701-d7e3-415b-8014-9844d62eb557/7/badge)
+![VSTS Build](https://revaturecloudio.visualstudio.com/_apis/public/build/definitions/2d1fc2cb-ad3a-4b2d-8b50-1441594d66b5/8/badge)
+![VSTS Release](https://rmsprodscussu1.vsrm.visualstudio.com/A8bf00fea-0cbc-400b-acc6-edcb0ddf1e59/_apis/public/Release/badge/2d1fc2cb-ad3a-4b2d-8b50-1441594d66b5/1/1)
 
 ## instruction
 1. download and install Virtualbox 5.2+.
