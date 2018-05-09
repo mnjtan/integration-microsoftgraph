@@ -16,4 +16,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Integration.MicrosoftGraph.Library\Integration.MicrosoftGraph.Library.csproj" />
+  </ItemGroup>
+
 </Project>
