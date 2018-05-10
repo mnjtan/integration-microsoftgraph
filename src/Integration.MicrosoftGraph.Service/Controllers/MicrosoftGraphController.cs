@@ -1,11 +1,14 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Integration.MicrosoftGraph.Service.Controllers
 {
   [Route("api/[controller]")]
-  public class MicrosoftGraphController : Controller
+  public class MicrosoftGraphController : BaseController
   {
+    public MicrosoftGraphController(ILoggerFactory factory) : base(factory) {}
+    
     public async Task<IActionResult> Get()
     {
       return await Task.Run(() => Ok());
