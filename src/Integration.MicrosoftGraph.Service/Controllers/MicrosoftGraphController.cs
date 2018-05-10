@@ -7,7 +7,7 @@ namespace Integration.MicrosoftGraph.Service.Controllers
   [Route("api/[controller]")]
   public class MicrosoftGraphController : BaseController
   {
-    public MicrosoftGraphController(ILoggerFactory factory) : base(factory) {}
+    public MicrosoftGraphController(ILoggerFactory loggerFactory) : base(loggerFactory) {}
     
     public async Task<IActionResult> Get()
     {

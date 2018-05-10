@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -6,11 +7,11 @@ namespace Integration.MicrosoftGraph.Service.Controllers
 {
   public abstract class BaseController : Controller
   {
-    protected readonly ILogger logger;
+    public readonly ILogger logger;
 
-    protected BaseController(ILoggerFactory factory)
+    public BaseController(ILoggerFactory loggerFactory)
     {
-      logger = factory.CreateLogger(this.GetType().Name);
+      logger = loggerFactory.CreateLogger(this.GetType().Name);
     }
   }
 }
