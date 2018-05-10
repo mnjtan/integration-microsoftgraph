@@ -7,9 +7,9 @@ namespace Integration.MicrosoftGraph.Service.Controllers
 {
   public abstract class BaseController : Controller
   {
-    public readonly ILogger logger;
+    protected readonly ILogger logger;
 
-    public BaseController(ILoggerFactory loggerFactory)
+    protected BaseController(ILoggerFactory loggerFactory)
     {
       logger = loggerFactory.CreateLogger(this.GetType().Name);
     }
