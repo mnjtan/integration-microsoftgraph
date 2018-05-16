@@ -50,12 +50,16 @@ namespace Integration.MicrosoftGraph.Library.Clients
             
             foreach(var u in users)
             {
-                if(u.mail == email)
+                if(u.mail != null)
                 {
-                    return u.id;
+                    Console.WriteLine("User mail {0}", u.mail);
+                    if(u.mail.Equals(email))
+                    {
+                        return u.id;
+                    }
                 }
             }
-            return null;
+            return "";
         }
 
         public async Task<string> CreateUser(string json)

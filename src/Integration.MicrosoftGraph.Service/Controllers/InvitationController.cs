@@ -87,10 +87,12 @@ namespace Integration.MicrosoftGraph.Service.Controllers
             {
                 Console.WriteLine("Inviting user: {0}", sfUser.EMail);
                 await inviteClient.InviteUser(sfUser);
-                // var uid = await msclient.GetUserId(sfUser.EMail);
-                // // call brandon's add user to group (GetGroupByName("groupName"), userID)
-                // GroupClient gclient = new GroupClient(clientId, clientSecret, tenant);
-                // string gid = await gclient.GetGroupByName("Associates");
+                var uid = await msclient.GetUserId(sfUser.EMail);
+                Console.WriteLine("UserID: {0}", uid);
+                // call brandon's add user to group (GetGroupByName("groupName"), userID)
+                GroupClient gclient = new GroupClient(clientId, clientSecret, tenant);
+                string gid = await gclient.GetGroupByName("Associates");
+                Console.WriteLine("GroupID: {0}", gid);
                 // if(String.IsNullOrEmpty(gid))
                 // {
                 //     var group = new GroupModel();
