@@ -54,7 +54,6 @@ namespace Integration.MicrosoftGraph.Library.Clients
                 }
             }
             return null;
-
         }
 
         public async Task<string> CreateUser(string json)

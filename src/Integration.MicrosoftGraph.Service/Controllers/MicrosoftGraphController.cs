@@ -14,10 +14,18 @@ namespace Integration.MicrosoftGraph.Service.Controllers
   [Produces("application/json")]
   public class MicrosoftGraphController : Controller
   {
-        private static string tenant = ReadAppSettings.tenant;
-        private static string clientId = ReadAppSettings.clientId;
-        private static string clientSecret = ReadAppSettings.clientSecret;
-        private static MSGraphClient client = new MSGraphClient(clientId, clientSecret, tenant);
+        private string tenant { set; get; }
+        private string clientId { set; get; }
+        private string clientSecret { set; get; }
+        private MSGraphClient client { set; get; }
+
+        public MicrosoftGraphController(ReadAppSettings settings)
+        {
+            tenant = settings.microsoft_tenant;
+            clientId = settings.microsoft_client_id;
+            clientSecret = settings.microsoft_client_secret;
+            client = new MSGraphClient(clientId, clientSecret, tenant);
+        }
 
     [HttpGet()]
     public async Task<IActionResult> Get()
