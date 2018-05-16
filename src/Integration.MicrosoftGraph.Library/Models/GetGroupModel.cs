@@ -15,7 +15,7 @@ namespace Integration.MicrosoftGraph.Library.Models
         public string mailNickname {get; set;}
         public string onPremisesLastSyncDatetime {get; set;}
         public string onPremisesSecurityIdentifier {get; set;}
-        public bool onPremisesSyncEnabled {get; set;}
+        
         public List<string> proxyAddresses {get; set;}
         public bool securityEnabled {get; set;}
         public string visibility {get; set;}
