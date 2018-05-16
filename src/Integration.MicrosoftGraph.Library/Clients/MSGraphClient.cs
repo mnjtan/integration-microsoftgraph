@@ -17,9 +17,8 @@ namespace Integration.MicrosoftGraph.Library.Clients
         private string clientId { get; set; }
         private string clientSecret { get; set; }
         private string tenant { get; set; }
-        private AuthenticationContext authContext;
-        private ClientCredential credential;
-        private const string msGraphScope = "https://graph.microsoft.com/.default";
+        private readonly AuthenticationContext authContext;
+        private readonly ClientCredential credential;
         private const string msGraphQuery = "https://graph.microsoft.com/v1.0";
 
         public MSGraphClient(string clientId, string clientSecret, string tenant)
