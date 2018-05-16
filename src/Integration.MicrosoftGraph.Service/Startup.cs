@@ -37,17 +37,17 @@ namespace Integration.MicrosoftGraph.Service
             }
             else
             {
-                strings.Add(Configuration.GetSection("tenant").ToString());
-                strings.Add(Configuration.GetSection("clientId").ToString());
-                strings.Add(Configuration.GetSection("clientSecret").ToString());
-                strings.Add(Configuration.GetSection("salesforceEndPoint").ToString());
+                strings.Add(Configuration.GetSection("Tenant:tenant").Value);
+                strings.Add(Configuration.GetSection("Tenant:clientId").Value);
+                strings.Add(Configuration.GetSection("Tenant:clientSecret").Value);
+                strings.Add(Configuration.GetSection("Tenant:salesforceEndPoint").Value);
 
             }
             ReadAppSettings settings = new ReadAppSettings(strings);
             services.AddSingleton(settings);
             
       services.AddMvc();
-      
+
       //Register ther Swagger generator, defining 1 or more Swagger documents
       services.AddSwaggerGen( c =>
       {
