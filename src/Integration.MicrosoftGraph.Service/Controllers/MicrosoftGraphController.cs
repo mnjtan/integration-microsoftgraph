@@ -1,41 +1,46 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Integration.MicrosoftGraph.Library.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using Integration.MicrosoftGraph.Library.Clients;
 
 namespace Integration.MicrosoftGraph.Service.Controllers
 {
   [Route("api/[controller]")]
-  public class MicrosoftGraphController : BaseController
+  [Produces("application/json")]
+  public class MicrosoftGraphController : Controller
   {
-    public MicrosoftGraphController(ILoggerFactory loggerFactory) : base(loggerFactory) {}
-    
+        private static string tenant = ReadAppSettings.tenant;
+        private static string clientId = ReadAppSettings.clientId;
+        private static string clientSecret = ReadAppSettings.clientSecret;
+        private static MSGraphClient client = new MSGraphClient(clientId, clientSecret, tenant);
+
+    [HttpGet()]
     public async Task<IActionResult> Get()
     {
-      return await Task.Run(() => Ok());
+        var usersString = await client.GetUsers("");
+        var usersResponse = JsonConvert.DeserializeObject<MSGraphUserListResponse>(usersString);
+        return await Task.Run(() => Ok(usersResponse.value));
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    [HttpGet("{userPrincipalName}")]
+    public async Task<IActionResult> Get(string userPrincipalName)
     {
-      return await Task.Run(() => Ok());
+        var userString = await client.GetUsers(userPrincipalName);
+        var singleUser = JsonConvert.DeserializeObject<User>(userString);
+        return await Task.Run(() => Ok(singleUser));
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody]object value)
+    public async Task<IActionResult> Post([FromBody]User user)
     {
-      return await Task.Run(() => Ok());
-    }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody]object value)
-    {
-      return await Task.Run(() => Ok());
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-      return await Task.Run(() => Ok());
+      var userJson = JsonConvert.SerializeObject(user);
+      var creationResponse = await client.CreateUser(userJson);
+      return await Task.Run(() => Ok(creationResponse));
     }
   }
 }
