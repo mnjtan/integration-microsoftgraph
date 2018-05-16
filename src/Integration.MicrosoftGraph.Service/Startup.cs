@@ -30,6 +30,7 @@ namespace Integration.MicrosoftGraph.Service
             List<string> strings = new List<string>();
             if(Env.IsStaging())
             {
+                Console.WriteLine("Staging");
                 strings.Add(Environment.GetEnvironmentVariable("MICROSOFT_GRAPH_CLIENT_ID"));
                 strings.Add(Environment.GetEnvironmentVariable("MICROSOFT_GRAPH_CLIENT_SECRET"));
                 strings.Add(Environment.GetEnvironmentVariable("MICROSOFT_GRAPH_TENANT"));
@@ -37,10 +38,11 @@ namespace Integration.MicrosoftGraph.Service
             }
             else
             {
-                strings.Add(Configuration.GetSection("tenant").ToString());
-                strings.Add(Configuration.GetSection("clientId").ToString());
-                strings.Add(Configuration.GetSection("clientSecret").ToString());
-                strings.Add(Configuration.GetSection("salesforceEndPoint").ToString());
+                Console.WriteLine("Not Staging");
+                strings.Add(Configuration.GetValue<string>("tenant"));
+                strings.Add(Configuration.GetValue<string>("clientId"));
+                strings.Add(Configuration.GetValue<string>("clientSecret"));
+                strings.Add(Configuration.GetValue<string>("salesforceEndPoint"));
 
             }
             ReadAppSettings settings = new ReadAppSettings(strings);
@@ -51,7 +53,7 @@ namespace Integration.MicrosoftGraph.Service
       //Register ther Swagger generator, defining 1 or more Swagger documents
       services.AddSwaggerGen( c =>
       {
-        c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+        c.SwaggerDoc("v1", new Info { Title = "Revature Microsoft Graph API", Version = "v1" });
       });
     }
 

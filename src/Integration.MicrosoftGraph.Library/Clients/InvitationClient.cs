@@ -44,7 +44,7 @@ namespace Integration.MicrosoftGraph.Library.Clients
         {
             Invitation invitation = new Invitation();
             invitation.invitedUserEmailAddress = SFUser.EMail;
-            invitation.inviteRedirectUrl = "Revature_housing_homepage";
+            invitation.inviteRedirectUrl = "http://Revature_housing_homepage:8080";
             invitation.sendInvitationMessage = true;
             var json = JsonConvert.SerializeObject(invitation);
             return await PostInvitation("/invitations", json);

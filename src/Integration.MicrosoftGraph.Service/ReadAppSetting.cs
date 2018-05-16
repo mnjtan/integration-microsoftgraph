@@ -16,13 +16,6 @@ namespace Integration.MicrosoftGraph.Service
 
         public ReadAppSettings(List<string> strings)
         {
-            foreach(string s in strings)
-            {
-                Console.WriteLine("Strings in Configuration: ");
-                Console.WriteLine(s);
-                Console.WriteLine(s.ToString());
-            }
-
             microsoft_tenant = strings[0];
             microsoft_client_id = strings[1];
             microsoft_client_secret = strings[2];

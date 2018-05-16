@@ -24,9 +24,6 @@ namespace Integration.MicrosoftGraph.Service.Controllers
             tenant = settings.microsoft_tenant;
             clientId = settings.microsoft_client_id;
             clientSecret = settings.microsoft_client_secret;
-            System.Console.WriteLine("Tenant {0}", tenant);
-            System.Console.WriteLine("ClientID {0}", clientId);
-            System.Console.WriteLine("ClientSecret {0}", clientSecret);
             client = new MSGraphClient(clientId, clientSecret, tenant);
         }
 

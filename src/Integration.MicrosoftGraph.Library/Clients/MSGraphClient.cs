@@ -45,7 +45,9 @@ namespace Integration.MicrosoftGraph.Library.Clients
         public async Task<string> GetUserId(string email)
         {
             string usersString = await GetUsers("");
-            var users = JsonConvert.DeserializeObject<List<User>>(usersString);
+            var usersResponse = JsonConvert.DeserializeObject<MSGraphUserListResponse>(usersString);
+            var users = usersResponse.value;
+            
             foreach(var u in users)
             {
                 if(u.mail == email)
