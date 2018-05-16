@@ -71,11 +71,7 @@ namespace Integration.MicrosoftGraph.Service.Controllers
             {
                 SFUsers.Remove(sfUser);
             }
-            
-            foreach (var adUser in ADUsers)
-            {
-                await msclient.DeleteUser("/users/" + adUser.id);
-            }
+        
 
             foreach (var sfUser in SFUsers)
             {
