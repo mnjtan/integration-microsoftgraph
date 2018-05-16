@@ -8,15 +8,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Integration.MicrosoftGraph.Service
 {
   public class Startup
   {
-    public Startup(IConfiguration configuration)
+    public Startup(IConfiguration configuration, IHostingEnvironment env)
     {
       Configuration = configuration;
+      Env = env;
     }
+
+    public IHostingEnvironment Env {get; }
 
     public IConfiguration Configuration { get; }
 
@@ -24,6 +28,14 @@ namespace Integration.MicrosoftGraph.Service
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc();
+      
+      services.AddSingleton<ReadAppSettings>(new ReadAppSettings());
+
+      //Register ther Swagger generator, defining 1 or more Swagger documents
+      services.AddSwaggerGen( c =>
+      {
+        c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +48,16 @@ namespace Integration.MicrosoftGraph.Service
         app.UseDeveloperExceptionPage();
       }
 
+      // Enable middleware to serve generated Swagger as a JSON endpoint.
+      app.UseSwagger();
+
+      // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+      // specifying the Swagger JSON endpoint.
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Integration.MicrosoftGraph.Service API v1");
+      });
+      
       app.UseMvc();
     }
   }
