@@ -27,7 +27,6 @@ namespace Integration.MicrosoftGraph.Library.Clients
             this.clientId = clientId;
             this.clientSecret = clientSecret;
             this.tenant = tenant;
-            //private const string authorityFormat = "https://login.microsoftonline.com/{0}/v2.0";
             // The AuthenticationContext is ADAL's primary class, in which you indicate the direcotry to use.
             this.authContext = new AuthenticationContext("https://login.microsoftonline.com/" + tenant);
 

@@ -38,10 +38,9 @@ namespace Integration.MicrosoftGraph.Service.Controllers
         }
 
         [HttpGet]
-        public async void GetUser()
+        public async Task GetUser()
         {   
             var client = new HttpClient();
-            //TODO:: change to live server.
             var SFResult = await client.GetAsync(sfEndPoint);
             var SFUsers = JsonConvert.DeserializeObject<List<SalesforceUser>>(await SFResult.Content.ReadAsStringAsync());
             MSGraphClient msclient = new MSGraphClient(clientId, clientSecret, tenant);
