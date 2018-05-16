@@ -47,8 +47,6 @@ namespace Integration.MicrosoftGraph.Service
             services.AddSingleton(settings);
             
       services.AddMvc();
-      
-      services.AddSingleton<ReadAppSettings>(new ReadAppSettings());
 
       //Register ther Swagger generator, defining 1 or more Swagger documents
       services.AddSwaggerGen( c =>
