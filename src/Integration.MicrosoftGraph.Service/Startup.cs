@@ -30,9 +30,9 @@ namespace Integration.MicrosoftGraph.Service
             List<string> strings = new List<string>();
             if(Env.IsStaging())
             {
+                strings.Add(Environment.GetEnvironmentVariable("MICROSOFT_GRAPH_TENANT"));
                 strings.Add(Environment.GetEnvironmentVariable("MICROSOFT_GRAPH_CLIENT_ID"));
                 strings.Add(Environment.GetEnvironmentVariable("MICROSOFT_GRAPH_CLIENT_SECRET"));
-                strings.Add(Environment.GetEnvironmentVariable("MICROSOFT_GRAPH_TENANT"));
                 strings.Add(Environment.GetEnvironmentVariable("SALESFORCE_ENDPOINT"));
             }
             else
