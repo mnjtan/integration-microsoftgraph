@@ -45,11 +45,19 @@ namespace Integration.MicrosoftGraph.Service
             }
             ReadAppSettings settings = new ReadAppSettings(strings);
             services.AddSingleton(settings);
+
+            
             
       services.AddMvc();
+            services.AddCors(o => o.AddPolicy("Open", builder =>
+            {
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+            }));
 
-      //Register ther Swagger generator, defining 1 or more Swagger documents
-      services.AddSwaggerGen( c =>
+            //Register ther Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen( c =>
       {
         c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
       });
@@ -59,7 +67,7 @@ namespace Integration.MicrosoftGraph.Service
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
       loggerFactory.AddApplicationInsights(app.ApplicationServices);
-
+            app.UseCors("Open");
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
