@@ -8,5 +8,6 @@ FROM microsoft/aspnetcore:2.0 as deploy
 WORKDIR /webapi
 COPY --from=build /docker/www .
 ENV ASPNETCORE_URLS=http://+:80/
+ENV ASPNETCORE_ENVIRONMENT=string
 EXPOSE 80
 CMD [ "dotnet", "Integration.MicrosoftGraph.Service.dll" ]
