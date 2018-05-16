@@ -20,17 +20,29 @@ namespace Integration.MicrosoftGraph.Service.Controllers
     [Produces("application/json")]
     public class InvitationController : Controller
     {
-        private static string tenant = ReadAppSettings.tenant;
-        private static string clientId = ReadAppSettings.clientId;
-        private static string clientSecret = ReadAppSettings.clientSecret;
-        private static InvitationClient inviteClient = new InvitationClient(clientId, clientSecret, tenant);
+
+        private string tenant { set; get; }
+        private string clientId { set; get; }
+        private string clientSecret { set; get; }
+        private string sfEndPoint { set; get; }
+
+        private InvitationClient inviteClient { set; get; }
+
+        public InvitationController(ReadAppSettings settings)
+        {
+            tenant = settings.microsoft_tenant;
+            clientId = settings.microsoft_client_id;
+            clientSecret = settings.microsoft_client_secret;
+            sfEndPoint = settings.salesforce_endpoint;
+            inviteClient = new InvitationClient(clientId, clientSecret, tenant);
+        }
 
         [HttpGet]
         public async void GetUser()
         {   
             var client = new HttpClient();
             //TODO:: change to live server.
-            var SFResult = await client.GetAsync("api/person");
+            var SFResult = await client.GetAsync(sfEndPoint);
             var SFUsers = JsonConvert.DeserializeObject<List<SalesforceUser>>(await SFResult.Content.ReadAsStringAsync());
             MSGraphClient msclient = new MSGraphClient(clientId, clientSecret, tenant);
             var msusers = await msclient.GetUsers("");

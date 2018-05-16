@@ -9,14 +9,17 @@ namespace Integration.MicrosoftGraph.Service
 {
     public class ReadAppSettings
     {
-        public static IConfiguration Configuration { get; set; }
+        public readonly string microsoft_tenant;
+        public readonly string microsoft_client_id;
+        public readonly string microsoft_client_secret;
+        public readonly string salesforce_endpoint;
 
-        IConfigurationBuilder builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.dev.json");
-
-        public static string tenant = Configuration["tenant"];
-        public static string clientId = Configuration["clientId"];
-        public static string clientSecret = Configuration["clientSecret"];
+        public ReadAppSettings(List<string> strings)
+        {
+            microsoft_tenant = strings[0];
+            microsoft_client_id = strings[1];
+            microsoft_client_secret = strings[2];
+            salesforce_endpoint = strings[3];
+        }
     }
 }
