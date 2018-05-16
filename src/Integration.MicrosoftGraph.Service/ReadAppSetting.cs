@@ -28,5 +28,6 @@ namespace Integration.MicrosoftGraph.Service
             microsoft_client_secret = strings[2];
             salesforce_endpoint = strings[3];
         }
+
     }
 }
