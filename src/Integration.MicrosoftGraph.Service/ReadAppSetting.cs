@@ -15,8 +15,15 @@ namespace Integration.MicrosoftGraph.Service
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.dev.json");
 
-        public static string tenant = Configuration["tenant"];
-        public static string clientId = Configuration["clientId"];
-        public static string clientSecret = Configuration["clientSecret"];
+        public static string tenant;
+        public static string clientId;
+        public static string clientSecret;
+
+        public ReadAppSettings()
+        {
+            tenant = Configuration["tenant"];
+            clientId = Configuration["clientId"];
+            clientSecret = Configuration["clientSecret"];
+        }          
     }
 }
