@@ -45,24 +45,40 @@ namespace Integration.MicrosoftGraph.Service.Controllers
             var SFUsers = JsonConvert.DeserializeObject<List<SalesforceUser>>(await SFResult.Content.ReadAsStringAsync());
             MSGraphClient msclient = new MSGraphClient(clientId, clientSecret, tenant);
             var msusers = await msclient.GetUsers("");
-            var ADUsers = JsonConvert.DeserializeObject<List<AzureUser>>(msusers);
+            var ADUsersResponse = JsonConvert.DeserializeObject<MSGraphUserListResponse>(msusers);
+            var ADUsers = ADUsersResponse.value;
+
+            var ADUsersToDelete = new List<User>();
+            var SFUsersToDelete = new List<SalesforceUser>();
+
             foreach(var adUser in ADUsers)
             {
                 foreach(var sfUser in SFUsers)
                 {
                     if (sfUser.EMail == adUser.mail)
                     {
-                        SFUsers.Remove(sfUser);
-                        ADUsers.Remove(adUser);
+                        SFUsersToDelete.Add(sfUser);
+                        ADUsersToDelete.Add(adUser);
                     }
                 }
             }
-            foreach(var adUser in ADUsers)
+
+            foreach (var adUser in ADUsersToDelete)
             {
-                // call delete with adUser.id
-                await msclient.DeleteUser((adUser.id).ToString());
+                ADUsers.Remove(adUser);
             }
-            foreach(var sfUser in SFUsers)
+            foreach (var sfUser in SFUsersToDelete)
+            {
+                SFUsers.Remove(sfUser);
+            }
+
+            foreach (var adUser in ADUsers)
+            {
+                await msclient.DeleteUser("/users/" + adUser.id);
+                break;
+            }
+
+            foreach (var sfUser in SFUsers)
             {
                 
                 await inviteClient.InviteUser(sfUser);
@@ -70,7 +86,7 @@ namespace Integration.MicrosoftGraph.Service.Controllers
                 // call brandon's add user to group (GetGroupByName("groupName"), userID)
                 GroupClient gclient = new GroupClient(clientId, clientSecret, tenant);
                 string gid = await gclient.GetGroupByName("Associates");
-                if(String.IsNullOrEmpty(gid))
+                if (String.IsNullOrEmpty(gid))
                 {
                     var group = new GroupModel();
                     group.description = "Associate Group";
@@ -82,7 +98,7 @@ namespace Integration.MicrosoftGraph.Service.Controllers
 
                     gid = await gclient.GetGroupByName("Associates");
                 }
-                
+
                 await gclient.AddUserToGroup(gid, uid);
             }
         }
