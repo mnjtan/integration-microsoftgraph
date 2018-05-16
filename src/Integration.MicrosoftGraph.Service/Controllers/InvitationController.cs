@@ -85,28 +85,30 @@ namespace Integration.MicrosoftGraph.Service.Controllers
 
             foreach(var sfUser in SFUsers)
             {
-                Console.WriteLine("Inviting user: {0}", sfUser.EMail);
+                //Console.WriteLine("Inviting user: {0}", sfUser.EMail);
                 await inviteClient.InviteUser(sfUser);
                 var uid = await msclient.GetUserId(sfUser.EMail);
-                Console.WriteLine("UserID: {0}", uid);
+                //Console.WriteLine("UserID: {0}", uid);
                 // call brandon's add user to group (GetGroupByName("groupName"), userID)
                 GroupClient gclient = new GroupClient(clientId, clientSecret, tenant);
                 string gid = await gclient.GetGroupByName("Associates");
-                Console.WriteLine("GroupID: {0}", gid);
-                // if(String.IsNullOrEmpty(gid))
-                // {
-                //     var group = new GroupModel();
-                //     group.description = "Associate Group";
-                //     group.displayName = "Associate";
-                //     group.mailEnabled = false;
-                //     group.mailNickname = "Associate Mail";
-                //     group.securityEnabled = false;
-                //     await gclient.CreateGroup(group);
-
-                //     gid = await gclient.GetGroupByName("Associates");
-                // }
+                //Console.WriteLine("GroupID: {0}", gid);
+                if(String.IsNullOrEmpty(gid))
+                {
+                    var group = new GroupModel();
+                    group.description = "Associate Group";
+                    group.displayName = "Associate";
+                    group.mailEnabled = false;
+                    group.mailNickname = "AssociateMail";
+                    group.securityEnabled = false;
+                    await gclient.CreateGroup(group);
+                    gid = await gclient.GetGroupByName("Associates");
+                }
                 
-                // await gclient.AddUserToGroup(gid, uid);
+                // Console.WriteLine("Trying to add User to Group Associates");
+                // Console.WriteLine("GroupID {0}", gid);
+                // Console.WriteLine("UserID {0}", uid);
+                await gclient.AddUserToGroup(gid, uid);
             }
         }
     }

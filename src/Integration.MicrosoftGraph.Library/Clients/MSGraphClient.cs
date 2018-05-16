@@ -55,6 +55,8 @@ namespace Integration.MicrosoftGraph.Library.Clients
                     Console.WriteLine("User mail {0}", u.mail);
                     if(u.mail.Equals(email))
                     {
+                        Console.WriteLine("Match");
+                        Console.WriteLine("Id {0}", u.id);
                         return u.id;
                     }
                 }
