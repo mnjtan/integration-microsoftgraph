@@ -75,25 +75,10 @@ namespace Integration.MicrosoftGraph.Service.Controllers
 
             foreach (var sfUser in SFUsers)
             {
-                
-                await inviteClient.InviteUser(sfUser);
-                var uid = await msclient.GetUserId(sfUser.EMail);
-                GroupClient gclient = new GroupClient(clientId, clientSecret, tenant);
-                string gid = await gclient.GetGroupByName("Associates");
-                if (String.IsNullOrEmpty(gid) || gid == "No Id Found")
-                {
-                    var group = new GroupModel();
-                    group.description = "Associate Group";
-                    group.displayName = "Associates";
-                    group.mailEnabled = false;
-                    group.mailNickname = "Associate Mail";
-                    group.securityEnabled = false;
-                    await gclient.CreateGroup(group);
-
-                    gid = await gclient.GetGroupByName("Associates");
-                }
-
-                await gclient.AddUserToGroup(gid, uid);
+                var inviteResponse = await inviteClient.InviteUser(sfUser);
+                var invitation = JsonConvert.DeserializeObject<Invitation>(inviteResponse);
+                var uid = invitation.invitedUser.id;
+                Console.WriteLine(inviteResponse);
             }
         }
     }

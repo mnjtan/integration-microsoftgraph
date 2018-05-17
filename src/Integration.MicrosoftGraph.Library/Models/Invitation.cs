@@ -20,5 +20,12 @@ namespace Integration.MicrosoftGraph.Service.Models
 
         // The status of the invitation. Possible values: PendingAcceptance, Completed, InProgress, and Error
         public string status { get; set; }
+
+        public InvitedUser invitedUser { get; set; }
+    }
+
+    public class InvitedUser
+    {
+        public string id { get; set; }
     }
 }
