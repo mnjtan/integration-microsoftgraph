@@ -85,7 +85,7 @@ namespace Integration.MicrosoftGraph.Service.Controllers
                 {
                     var group = new GroupModel();
                     group.description = "Associate Group";
-                    group.displayName = "Associate";
+                    group.displayName = "Associates";
                     group.mailEnabled = false;
                     group.mailNickname = "Associate Mail";
                     group.securityEnabled = false;
