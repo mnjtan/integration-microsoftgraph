@@ -78,10 +78,9 @@ namespace Integration.MicrosoftGraph.Service.Controllers
                 
                 await inviteClient.InviteUser(sfUser);
                 var uid = await msclient.GetUserId(sfUser.EMail);
-                // call brandon's add user to group (GetGroupByName("groupName"), userID)
                 GroupClient gclient = new GroupClient(clientId, clientSecret, tenant);
                 string gid = await gclient.GetGroupByName("Associates");
-                if (String.IsNullOrEmpty(gid))
+                if (String.IsNullOrEmpty(gid) || gid == "No Id Found")
                 {
                     var group = new GroupModel();
                     group.description = "Associate Group";
