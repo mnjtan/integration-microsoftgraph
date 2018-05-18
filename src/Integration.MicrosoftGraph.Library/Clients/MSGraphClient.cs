@@ -1,4 +1,5 @@
 using Integration.MicrosoftGraph.Library.Models;
+using Integration.MicrosoftGraph.Service.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Newtonsoft.Json;
 using System;
@@ -40,25 +41,6 @@ namespace Integration.MicrosoftGraph.Library.Clients
             return await SendGraphGetRequest("/users", query);
         }
 
-        public async Task<string> GetUserId(string email)
-        {
-            string usersString = await GetUsers("");
-            var usersResponse = JsonConvert.DeserializeObject<MSGraphUserListResponse>(usersString);
-            var users = usersResponse.value;
-
-            foreach(var u in users)
-            {
-                if(u.mail != null)
-                {
-                    if(u.mail.Equals(email))
-                    {
-                        return u.id;
-                    }
-                }
-            }
-            return "";
-        }
-
         public async Task<string> CreateUser(string json)
         {
             return await SendGraphPostRequest("/users", json);
@@ -69,6 +51,15 @@ namespace Integration.MicrosoftGraph.Library.Clients
             return await SendGraphDeleteRequest(apiExt);
         }
 
+        public async Task<string> InviteUser(SalesforceUser SFUser)
+        {
+            Invitation invitation = new Invitation();
+            invitation.invitedUserEmailAddress = SFUser.EMail;
+            invitation.inviteRedirectUrl = "http://Revature_housing_homepage:8080";
+            invitation.sendInvitationMessage = true;
+            var json = JsonConvert.SerializeObject(invitation);
+            return await SendGraphPostRequest("/invitations", json);
+        }
         public async Task<string> SendGraphGetRequest(string api, string query)
         {
 

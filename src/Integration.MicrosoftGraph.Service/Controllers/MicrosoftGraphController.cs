@@ -14,16 +14,13 @@ namespace Integration.MicrosoftGraph.Service.Controllers
   [Produces("application/json")]
   public class MicrosoftGraphController : Controller
   {
-        private string tenant { set; get; }
-        private string clientId { set; get; }
-        private string clientSecret { set; get; }
         private MSGraphClient client { set; get; }
 
         public MicrosoftGraphController(ReadAppSettings settings)
         {
-            tenant = settings.microsoft_tenant;
-            clientId = settings.microsoft_client_id;
-            clientSecret = settings.microsoft_client_secret;
+            var tenant = settings.microsoft_tenant;
+            var clientId = settings.microsoft_client_id;
+            var clientSecret = settings.microsoft_client_secret;
             client = new MSGraphClient(clientId, clientSecret, tenant);
         }
 

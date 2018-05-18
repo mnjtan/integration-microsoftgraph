@@ -18,33 +18,31 @@ namespace Integration.MicrosoftGraph.Service.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class InvitationController : Controller
+    public class SyncUsersController : Controller
     {
 
-        private string tenant { set; get; }
-        private string clientId { set; get; }
-        private string clientSecret { set; get; }
+        private MSGraphClient client { set; get; }
         private string sfEndPoint { set; get; }
 
-        private InvitationClient inviteClient { set; get; }
-
-        public InvitationController(ReadAppSettings settings)
+        public SyncUsersController(ReadAppSettings settings)
         {
-            tenant = settings.microsoft_tenant;
-            clientId = settings.microsoft_client_id;
-            clientSecret = settings.microsoft_client_secret;
             sfEndPoint = settings.salesforce_endpoint;
-            inviteClient = new InvitationClient(clientId, clientSecret, tenant);
+            var tenant = settings.microsoft_tenant;
+            var clientId = settings.microsoft_client_id;
+            var clientSecret = settings.microsoft_client_secret;
+            client = new MSGraphClient(clientId, clientSecret, tenant);
         }
 
         [HttpGet]
         public async Task GetUser()
         {   
-            var client = new HttpClient();
-            var SFResult = await client.GetAsync(sfEndPoint);
+            //Get SalesForce Users
+            var httpclient = new HttpClient();
+            var SFResult = await httpclient.GetAsync(sfEndPoint);
             var SFUsers = JsonConvert.DeserializeObject<List<SalesforceUser>>(await SFResult.Content.ReadAsStringAsync());
-            MSGraphClient msclient = new MSGraphClient(clientId, clientSecret, tenant);
-            var msusers = await msclient.GetUsers("");
+
+            //Get Azure AD Users
+            var msusers = await client.GetUsers("");
             var ADUsersResponse = JsonConvert.DeserializeObject<MSGraphUserListResponse>(msusers);
             var ADUsers = ADUsersResponse.value;
 
@@ -75,7 +73,7 @@ namespace Integration.MicrosoftGraph.Service.Controllers
 
             foreach (var sfUser in SFUsers)
             {
-                var inviteResponse = await inviteClient.InviteUser(sfUser);
+                var inviteResponse = await client.InviteUser(sfUser);
                 var invitation = JsonConvert.DeserializeObject<Invitation>(inviteResponse);
                 var uid = invitation.invitedUser.id;
                 Console.WriteLine(inviteResponse);
